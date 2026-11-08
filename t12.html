@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- TEHTÄVÄ 12: lomakkeet ja tapahtumat.
+     Sivu sisältää useita erillisiä harjoituksia, joihin t12 koodi.js
+     liittää tapahtumakäsittelijät. Skripti ladataan vasta </body>-tagin
+     jälkeen, jolloin kaikki elementit ovat varmasti olemassa. -->
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mielipidelomake + Tehtävät</title>
+  <!-- Ulkoinen tyylitiedosto: .form-container, .white-box, .section-label jne. -->
+  <link rel="stylesheet" href="t12 tyyli.css">
+</head>
+<body>
+  <div class="form-container">
+
+    <!-- ===== Tervehdys ===== -->
+    <!-- Otsikkopalkki kullakin osiolle -->
+    <div class="section-label">Tervehdys</div>
+    <div class="white-box">
+      <div class="field-row">
+        <!-- for="nimi" yhdistää labelin kenttään, jonka id on "nimi" -->
+        <label for="nimi">Nimi:</label>
+        <input type="text" id="nimi" placeholder="Kirjoita nimesi">
+      </div>
+      <!-- type="button" = nappi ei lähetä lomaketta, vaan JS hoitaa klikkauksen -->
+      <button type="button" class="submit-btn" id="tervehdys-btn">Tervehdi</button>
+    </div>
+
+    <!-- ===== Isot kirjaimet ===== -->
+    <div class="section-label">Isot kirjaimet</div>
+    <div class="white-box">
+      <div class="field-row">
+        <label for="isot">Teksti:</label>
+        <input type="text" id="isot" placeholder="Kirjoita ja poistu kentästä">
+      </div>
+      <!-- Ohjeteksti käyttäjälle (JS muuttaa kentän arvon blur-tapahtumassa) -->
+      <p class="info">Kun poistut kentästä, teksti muuttuu ISOIKSI KIRJAIMIKSI.</p>
+    </div>
+
+    <!-- ===== Salasana ===== -->
+    <div class="section-label">Salasana</div>
+    <div class="white-box">
+      <div class="field-row">
+        <label for="salasana">Salasana:</label>
+        <!-- type="password" näyttää kirjoituksen pisteinä -->
+        <input type="password" id="salasana" placeholder="Vähintään 8 merkkiä">
+      </div>
+      <p class="info">Punainen = alle 8 merkkiä · Vihreä = 8 tai enemmän</p>
+    </div>
+
+    <!-- ===== Ruokalajit ===== -->
+    <div class="section-label">Ruokalajit</div>
+    <div class="white-box">
+      <!-- Kaikilla valintaruuduilla on sama name="ruoka", joten JS saa
+           ne yhdellä haulla querySelectorAll('input[name="ruoka"]:checked').
+           value on se teksti, joka liitetään tulokseen. -->
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="pizza" name="ruoka" value="Pizza">
+          <label for="pizza">Pizza</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="pasta" name="ruoka" value="Pasta">
+          <label for="pasta">Pasta</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="salaatti" name="ruoka" value="Salaatti">
+          <label for="salaatti">Salaatti</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="hampurilainen" name="ruoka" value="Hampurilainen">
+          <label for="hampurilainen">Hampurilainen</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="keitto" name="ruoka" value="Keitto">
+          <label for="keitto">Keitto</label>
+        </div>
+      </div>
+      <!-- Tilaa-nappi lukee valinnat ja tulostaa ne alla olevaan p-elementtiin -->
+      <button type="button" class="submit-btn" id="tilaa-btn">Tilaa</button>
+      <p id="tilaus-tulos" class="tulos"></p>
+    </div>
+
+    <!-- ===== Ajoneuvot ===== -->
+    <div class="section-label">Ajoneuvot</div>
+    <div class="white-box">
+      <!-- Ylätason valinta: kun tästä valitaan autot tai veneet,
+           JS näyttää vastaavan rivin ja piilottaa toisen. -->
+      <div class="select-row">
+        <label for="paaluokka">Valitse:</label>
+        <select id="paaluokka">
+          <option value="">Valitse...</option>
+          <option value="autot">Autot</option>
+          <option value="veneet">Veneet</option>
+        </select>
+      </div>
+
+      <!-- Autojen rivi. style="display: none" = piilossa heti alussa,
+           JS vaihtaa sen arvoksi "block" kun autot on valittu. -->
+      <div class="select-row" id="auto-rivi" style="display: none;">
+        <label for="autotyyppi">Autotyyppi:</label>
+        <select id="autotyyppi">
+          <option value="">Valitse auto...</option>
+          <option value="Henkilöauto">Henkilöauto</option>
+          <option value="Pakettiauto">Pakettiauto</option>
+          <option value="Maastoauto">Maastoauto</option>
+          <option value="Sähköauto">Sähköauto</option>
+        </select>
+      </div>
+
+      <!-- Veneiden rivi, samalla periaatteella kuin autojen rivi -->
+      <div class="select-row" id="vene-rivi" style="display: none;">
+        <label for="venetyyppi">Venetyyppi:</label>
+        <select id="venetyyppi">
+          <option value="">Valitse vene...</option>
+          <option value="Purjevene">Purjevene</option>
+          <option value="Moottorivene">Moottorivene</option>
+          <option value="Kajakk">Kajakk</option>
+          <option value="Ponttoni">Ponttoni</option>
+        </select>
+      </div>
+
+      <!-- Yhteenveto: JS kirjoittaa tähän aktiivisen valinnan (strong-elementin sisään).
+           strong = lihavoitu teksti. -->
+      <div id="aktiivinen-div" class="aktiivinen">
+        Aktiivinen valinta: <strong id="aktiivinen-teksti">–</strong>
+      </div>
+    </div>
+
+    <!-- Alkuperäinen mielipidelomake -->
+    <div class="section-label">Yhteystiedot</div>
+    <div class="white-box">
+      <div class="field-row">
+        <label for="etunimi">Etunimi:</label>
+        <input type="text" id="etunimi" name="etunimi">
+      </div>
+      <div class="field-row">
+        <label for="sukunimi">Sukunimi:</label>
+        <input type="text" id="sukunimi" name="sukunimi">
+      </div>
+      <div class="cv-row">
+        <label>CV:</label>
+        <!-- onclick-koodi: klikkaus "välitetään" piilotetulle file-kentälle,
+             jolloin selaimen tiedostonvalintaikkuna avautuu.
+             (file-kenttä ei ole näkyvissä, koska se on tyylitetty CSS:llä piiloon.) -->
+        <button type="button" class="file-btn" onclick="document.getElementById('cv-input').click()">Valitse tiedosto</button>
+        <!-- Tähän JS kirjoittaa valitun tiedoston nimen (t12 koodi.js) -->
+        <span class="file-name" id="file-name">Ei valittua tiedostoa</span>
+        <!-- accept rajaa sallitut tiedostopäätteet: pdf, doc ja docx -->
+        <input type="file" id="cv-input" name="cv" accept=".pdf,.doc,.docx">
+      </div>
+    </div>
+
+    <div class="section-label">Mielipiteet</div>
+    <div class="white-box">
+      <div class="section-title">Äänestyspäätökseen vaikuttaa</div>
+      <!-- Valintaruudut (checkboxit) eivät vaikuta tämän sivun JavaScriptiin -->
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="ulkoasu" name="vaikuttaa" value="ulkoasu">
+          <label for="ulkoasu">Ulkoasu</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="sukupuoli" name="vaikuttaa" value="sukupuoli">
+          <label for="sukupuoli">Sukupuoli</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="puolue" name="vaikuttaa" value="puolue">
+          <label for="puolue">Puolue</label>
+        </div>
+      </div>
+
+      <div class="select-row">
+        <label for="toinen-kierros">Toinen kierros:</label>
+        <select id="toinen-kierros" name="toinen_kierros">
+          <option value="">Valitse...</option>
+          <option value="ehdokas2">Ehdokas 2</option>
+          <option value="ehdokas3">Ehdokas 3</option>
+          <option value="ehdokas4">Ehdokas 4</option>
+        </select>
+      </div>
+
+      <div class="radio-title">Valitse sopivin:</div>
+      <!-- Radiovalinnoilla on sama name="sopivin", joten vain yksi voi olla valittuna -->
+      <div class="radio-group">
+        <div class="radio-item">
+          <input type="radio" id="ehdokas2" name="sopivin" value="2">
+          <label for="ehdokas2">Ehdokas numero 2</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="ehdokas3" name="sopivin" value="3">
+          <label for="ehdokas3">Ehdokas numero 3</label>
+        </div>
+        <div class="radio-item">
+          <input type="radio" id="ehdokas4" name="sopivin" value="4">
+          <label for="ehdokas4">Ehdokas numero 4</label>
+        </div>
+      </div>
+
+      <!-- Monirivinen tekstikenttä perusteluille -->
+      <label class="perustelut-label" for="perustelut">Perustelut</label>
+      <textarea class="perustelut-textarea" id="perustelut" name="perustelut"></textarea>
+    </div>
+
+    <!-- Lähetä-nappi. JS näyttää klikkauksesta vain demo-ilmoituksen. -->
+    <button type="button" class="submit-btn" id="laheta-btn">Lähetä</button>
+  </div>
+
+  <!-- Skripti ladataan vasta tässä, jolloin kaikki yllä olevat elementit ovat olemassa -->
+  <script src="t12 koodi.js"></script>
+</body>
+</html>

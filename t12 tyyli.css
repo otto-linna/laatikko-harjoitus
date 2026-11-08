@@ -1,0 +1,244 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #f8b4b4;
+  min-height: 100vh;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* Osioiden otsikot (pinkit laatikot) */
+.section-label {
+  display: inline-block;
+  background-color: #e83e8c;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  margin-top: 10px;
+}
+
+/* Valkoiset laatikot */
+.white-box {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* Kenttärivit */
+.field-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.field-row label {
+  min-width: 95px;
+  font-size: 15px;
+  color: #333;
+}
+
+.field-row input[type="text"],
+.field-row input[type="password"] {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.field-row input[type="text"]:focus,
+.field-row input[type="password"]:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.25);
+}
+
+/* CV-rivi */
+.cv-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cv-row label {
+  min-width: 95px;
+}
+
+.file-btn {
+  background: #f0f0f0;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.file-btn:hover {
+  background: #e5e5e5;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #666;
+}
+
+#cv-input {
+  display: none;
+}
+
+/* Info-tekstit */
+.info {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Checkboxit */
+.checkbox-group {
+  margin-bottom: 14px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.checkbox-item input {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Select */
+.select-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.select-row label {
+  margin-right: 10px;
+  min-width: 95px;
+}
+
+.select-row select {
+  height: 32px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 8px;
+  font-size: 14px;
+  min-width: 160px;
+}
+
+/* Radio */
+.radio-group {
+  margin-bottom: 14px;
+}
+
+.radio-title {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.radio-item input {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.perustelut-label {
+  font-size: 15px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.perustelut-textarea {
+  width: 100%;
+  height: 90px;
+  border: 1px solid #e57373;
+  border-radius: 3px;
+  padding: 10px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.perustelut-textarea:focus {
+  outline: none;
+  border-color: #ef5350;
+}
+
+/* Napit */
+.submit-btn {
+  background: white;
+  border: 1px solid #999;
+  border-radius: 4px;
+  padding: 8px 22px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+  margin-top: 6px;
+}
+
+.submit-btn:hover {
+  background: #f5f5f5;
+}
+
+.submit-btn:active {
+  background: #eee;
+}
+
+/* Tulosteksti */
+.tulos {
+  margin-top: 12px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* Aktiivinen valinta */
+.aktiivinen {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: #fff0f5;
+  border: 1px solid #f8b4d9;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.aktiivinen strong {
+  color: #c2185b;
+}
